@@ -118,6 +118,11 @@ function updateGraph () {
                 names = target.data()["id"].split("*")
                 setPapers(names[0],names[1])
             }
+
+            if (target.isNode()) {
+                name = target.data()["id"];
+                setPapers(name,null)
+            }
         }
     )
 }
@@ -127,12 +132,31 @@ function setPapers(name1, name2) {
     var table = $("#papertable")
     table.empty()
 
-    for (var i=0; i<links.length; i++) {
-        var link = links[i]
+    addedEids = {}
 
-        if (link["from"] == name1 & link["to"]==name2) {
+    for (var i=0; i<links.length; i++) {
+        var link = links[i];
+
+        if (link["eid"] in addedEids) {
+            // We've already added this paper
+            continue;
+        }
+
+        var useThisPaper = false;
+
+        if (name2 & link["from"] == name1 & link["to"]==name2) {
+            useThisPaper = true;
+        }
+        else {
+            if (link["from"] == name1 || link["to"] == name1) {
+                useThisPaper = true;
+            }
+        }
+
+        if (useThisPaper) {
+            addedEids[link["eid"]] = 1;
             var paper = publications[link["eid"]]
-            table.append("<tr><td>"+name1+"</td><td>"+name2+"</td><td>"+paper["title"]+"</td><td>"+paper["year"]+"</td><td><a class=\"btn btn-primary\" href=\""+paper["url"]+"\" role=\"button\" target=\"_abstract\">Abstract</a></td></tr>");  
+            table.append("<tr><td>"+link["from"]+"</td><td>"+link["to"]+"</td><td>"+paper["title"]+"</td><td>"+paper["year"]+"</td><td><a class=\"btn btn-primary\" href=\""+paper["url"]+"\" role=\"button\" target=\"_abstract\">Abstract</a></td></tr>");  
             console.log(link)
         }
     }

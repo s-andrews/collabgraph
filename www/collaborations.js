@@ -34,31 +34,44 @@ function updateGraph () {
 
     // Populate the list of nodes (people)
     var elements = []
-    for (let person in people) {
-        elements.push({"data":{"id":person, "type":people[person]["type"]}})
-    }
+    // for (let person in people) {
+    //     elements.push({"data":{"id":person, "type":people[person]["type"]}})
+    // }
 
-    // Make the list of edges
+    // Make the list of edges, and make nodes for the edges which exist
     edges = {}
+    nodes = {}
 
     for (var i=0;i<links.length; i++) {
         link = links[i]
+        if (link["from"] > link["to"]) {
+            continue;
+        }
         edge_name = link["from"]+"*"+link["to"]
 
+        person = link["from"]
+        if (!(person in nodes)) {
+            nodes[person] = {"data":{"id":person, "type":people[person]["type"]}}
+        }
+        person = link["to"]
+        if (!(person in nodes)) {
+            nodes[person] = {"data":{"id":person, "type":people[person]["type"]}}
+        }
+
         if (!(edge_name in edges)) {
-            console.log(edge_name)
             edges[edge_name] = {
                 data: {id: edge_name, source: link["from"], target: link["to"]}
             }
         }
     }
 
+    for (n in nodes) {
+        elements.push(nodes[n])
+    }
+
     for (e in edges) {
         elements.push(edges[e])
     }
-
-    console.log(elements)
-
 
     var cy = cytoscape({
 
@@ -89,8 +102,10 @@ function updateGraph () {
         ],
         
         layout: {
-        name: 'grid',
-        rows: 5
+            name: 'fcose',
+            animate: false, 
+            idealEdgeLength: 150,
+            nodeRepulsion: 2048
         }
         
         });

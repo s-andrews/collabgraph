@@ -14,7 +14,7 @@ def main():
 
             authors = sections[0]
             title = sections[7]
-            year = sections[9]
+            year = sections[8]
             url = sections[10]
             eid = parse_eid(url)
 

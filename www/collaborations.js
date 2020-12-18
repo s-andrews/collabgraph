@@ -104,10 +104,37 @@ function updateGraph () {
         layout: {
             name: 'fcose',
             animate: false, 
-            idealEdgeLength: 150,
+            idealEdgeLength: 250,
             nodeRepulsion: 2048
         }
         
         });
+
+    cy.on(
+        'tap',
+        function(event) {
+            target = event.target;
+            if (target.isEdge()) {
+                names = target.data()["id"].split("*")
+                setPapers(names[0],names[1])
+            }
+        }
+    )
+}
+
+function setPapers(name1, name2) {
+
+    var table = $("#papertable")
+    table.empty()
+
+    for (var i=0; i<links.length; i++) {
+        var link = links[i]
+
+        if (link["from"] == name1 & link["to"]==name2) {
+            var paper = publications[link["eid"]]
+            table.append("<tr><td>"+name1+"</td><td>"+name2+"</td><td>"+paper["title"]+"</td><td>"+paper["year"]+"</td><td><a class=\"btn btn-primary\" href=\""+paper["url"]+"\" role=\"button\" target=\"_abstract\">Abstract</a></td></tr>");  
+            console.log(link)
+        }
+    }
 }
     

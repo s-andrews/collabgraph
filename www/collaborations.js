@@ -58,8 +58,20 @@ function updateGraph () {
 
         if (!(edge_name in edges)) {
             edges[edge_name] = {
-                data: {id: edge_name, source: link["from"], target: link["to"]}
+                data: {id: edge_name, source: link["from"], target: link["to"], weight: 1}
             }
+        }
+        else {
+            edges[edge_name]["data"]["weight"]++;
+        }
+    }
+
+    // Find the max edge weight so we can colour appropriately
+    var maxWeight = 1;
+
+    for (edge in edges) {
+        if (edges[edge]["data"]["weight"] > maxWeight) {
+            maxWeight = edges[edge]["data"]["weight"];
         }
     }
 
@@ -91,7 +103,8 @@ function updateGraph () {
             selector: 'edge',
             style: {
             'width': 3,
-            'line-color': '#ccc',
+            // 'line-color': mapData(1,maxWeight,'#EEE','#222'),
+            'line-color': '#DDD',
             'curve-style': 'bezier'
             }
         }

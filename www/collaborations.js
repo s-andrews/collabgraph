@@ -44,9 +44,7 @@ function updateGraph () {
 
     for (var i=0;i<links.length; i++) {
         link = links[i]
-        if (link["from"] > link["to"]) {
-            continue;
-        }
+
         edge_name = link["from"]+"*"+link["to"]
 
         person = link["from"]

@@ -18,29 +18,37 @@ def main():
             url = sections[10]
             eid = parse_eid(url)
 
+            people_on_paper = []
+            for i in range(2, 6):
+                if sections[i] == "":
+                    continue
+
+                # Some sections have multiple people separated
+                # by commas
+                actual_people = sections[i].split(",")
+
+                for person in actual_people:
+                    person = person.strip().replace("\"","")
+                    if not person in people:
+                        if i < 4:
+                            people[person] = {"name":person, "type":"GroupLeader"}
+                        else:
+                            people[person] = {"name":person, "type":"Facility"}
+                    
+                    people_on_paper.append(person)
+
             publications[eid] = {
                 "authors": authors,
+                "collaborators" : people_on_paper,
                 "title" : title,
                 "year" : year,
                 "url" : url,
                 "eid" : eid
             }
 
-            people_on_paper = []
-            for i in range(2, 6):
-                if sections[i] == "":
-                    continue
-                if not sections[i] in people:
-                    if i < 4:
-                        people[sections[i]] = {"name":sections[i], "type":"GroupLeader"}
-                    else:
-                        people[sections[i]] = {"name":sections[i], "type":"Facility"}
-                
-                people_on_paper.append(sections[i])
-
             for p1 in people_on_paper:
                 for p2 in people_on_paper:
-                    if p1 == p2:
+                    if p1 >= p2:
                         continue
                     links.append({"eid":eid, "from":p1, "to":p2})
 

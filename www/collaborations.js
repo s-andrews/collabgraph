@@ -92,8 +92,6 @@ function updateGraph () {
             style: {
             'width': 3,
             'line-color': '#ccc',
-            'target-arrow-color': '#ccc',
-            'target-arrow-shape': 'triangle',
             'curve-style': 'bezier'
             }
         }
@@ -101,6 +99,7 @@ function updateGraph () {
         
         layout: {
             name: 'fcose',
+//            name: 'circle',
             animate: false, 
             idealEdgeLength: 250,
             nodeRepulsion: 2048

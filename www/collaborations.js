@@ -67,7 +67,7 @@ function updateGraph () {
     }
 
     // Find the max edge weight so we can colour appropriately
-    var maxWeight = 1;
+    maxWeight = 1;
 
     for (edge in edges) {
         if (edges[edge]["data"]["weight"] > maxWeight) {
@@ -102,9 +102,10 @@ function updateGraph () {
         {
             selector: 'edge',
             style: {
-            'width': 3,
-            // 'line-color': mapData(1,maxWeight,'#EEE','#222'),
-            'line-color': '#DDD',
+            // 'width': 3,
+            'width': "mapData(weight,1,"+maxWeight+",1,10)",
+            'line-color': "mapData(weight,1,"+maxWeight+",#CCC,#222)",
+            // 'line-color': '#DDD',
             'curve-style': 'bezier'
             }
         }
@@ -139,7 +140,7 @@ function updateGraph () {
 
 function setPapers(name1, name2) {
 
-    console.log("Setting papers to "+name1+" and "+name2)
+    // console.log("Setting papers to "+name1+" and "+name2)
     var table = $("#papertable")
     table.empty()
 
@@ -159,7 +160,7 @@ function setPapers(name1, name2) {
         if (useThisPaper) {
             var paper = publications[eid];
             table.append("<tr><td>"+paper["collaborators"]+"</td><td>"+paper["title"]+"</td><td>"+paper["year"]+"</td><td><a class=\"btn btn-primary\" href=\""+paper["url"]+"\" role=\"button\" target=\"_abstract\">Abstract</a></td></tr>");  
-            console.log(link)
+            // console.log(link)
         }
     }
 }

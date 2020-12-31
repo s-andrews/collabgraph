@@ -20,11 +20,7 @@ $(document).ready(function(){
     waitForDataLoad()
 
     // Sort out the year slider
-    $("#years").slider({
-        min: 2015,
-        max: 2019,
-        value: [2015,2019]
-    })
+    $("#years").slider({})
 
     // Actions for the filter links
     $("#papersicon").click(function(){$("#minpapers").toggle()})
@@ -52,12 +48,21 @@ function updateGraph () {
     // Get the current set of filters
     var minPapers = $("#minpapers").val();
 
+    var yearRange = $("#years").val().split(",");
+
     // Make the list of edges, and make nodes for the edges which exist
     edges = {}
     nodes = {}
 
     for (var i=0;i<links.length; i++) {
         link = links[i]
+
+        if (publications[link["eid"]]["year"] < yearRange[0]) {
+            continue;
+        }
+        if (publications[link["eid"]]["year"] > yearRange[1]) {
+            continue;
+        }
 
         edge_name = link["from"]+"*"+link["to"]
 

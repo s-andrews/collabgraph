@@ -23,10 +23,15 @@ $(document).ready(function(){
     $("#years").slider({})
 
     // Actions for the filter links
-    $("#papersicon").click(function(){$("#minpapers").toggle()})
+    $("#papersicon").click(function(){$("#papersp").toggle()})
+    $("#yearsicon").click(function(){$("#yearsp").toggle()})
 
     // Make the redraw button work
-    $("#redrawbutton").click(function(){updateGraph()})
+    $("#redrawbutton").click(function(){
+        $("#papersp").hide();
+        $("#yearsp").hide();
+        updateGraph();
+    })
 
 }); 
 
@@ -136,7 +141,7 @@ function updateGraph () {
         layout: {
             name: 'fcose',
 //            name: 'circle',
-            animate: false, 
+            animate: true, 
             idealEdgeLength: 250,
             nodeRepulsion: 2048
         }

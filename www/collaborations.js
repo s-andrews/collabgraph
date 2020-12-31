@@ -19,6 +19,13 @@ $(document).ready(function(){
 
     waitForDataLoad()
 
+    // Sort out the year slider
+    $("#years").slider({
+        min: 2015,
+        max: 2019,
+        value: [2015,2019]
+    })
+
     // Actions for the filter links
     $("#papersicon").click(function(){$("#minpapers").toggle()})
 

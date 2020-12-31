@@ -166,10 +166,16 @@ function setPapers(name1, name2) {
     var table = $("#papertable")
     table.empty()
 
+    // Only show papers in the current year filter range
+    var yearRange = $("#years").val().split(",");
+
     for (var eid in publications) {
 
         var useThisPaper = false;
 
+        if (publications[eid]["year"] < yearRange[0] || publications[eid]["year"] > yearRange[1]) {
+            continue;
+        }
         if ((!name2) & publications[eid]["collaborators"].includes(name1)) {
             useThisPaper = true;
         }

@@ -19,6 +19,12 @@ $(document).ready(function(){
 
     waitForDataLoad()
 
+    // Actions for the filter links
+    $("#papersicon").click(function(){$("#minpapers").toggle()})
+
+    // Make the redraw button work
+    $("#redrawbutton").click(function(){updateGraph()})
+
 }); 
 
 function waitForDataLoad(){
@@ -34,9 +40,10 @@ function updateGraph () {
 
     // Populate the list of nodes (people)
     var elements = []
-    // for (let person in people) {
-    //     elements.push({"data":{"id":person, "type":people[person]["type"]}})
-    // }
+
+
+    // Get the current set of filters
+    var minPapers = $("#minpapers").val();
 
     // Make the list of edges, and make nodes for the edges which exist
     edges = {}
@@ -80,6 +87,9 @@ function updateGraph () {
     }
 
     for (e in edges) {
+        if (edges[e]["data"]["weight"] < minPapers) {
+            continue
+        }
         elements.push(edges[e])
     }
 

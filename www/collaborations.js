@@ -75,10 +75,12 @@ function updateGraph () {
         if (!(person in nodes)) {
             nodes[person] = {"data":{"id":person, "type":people[person]["type"]}}
         }
+
         person = link["to"]
         if (!(person in nodes)) {
             nodes[person] = {"data":{"id":person, "type":people[person]["type"]}}
         }
+
 
         if (!(edge_name in edges)) {
             edges[edge_name] = {
@@ -91,15 +93,30 @@ function updateGraph () {
     }
 
     // Find the max edge weight so we can colour appropriately
-    maxWeight = 1;
+    var maxWeight = 1;
+    var keptPeople = {};
 
     for (edge in edges) {
+        if (edges[edge]["data"]["weight"] < minPapers) {
+            continue
+        }
+
         if (edges[edge]["data"]["weight"] > maxWeight) {
             maxWeight = edges[edge]["data"]["weight"];
         }
+
+        keptPeople[edges[edge]["data"]["source"]] = 1;
+        keptPeople[edges[edge]["data"]["target"]] = 1;
+
     }
 
     for (n in nodes) {
+        if (!(n in keptPeople)) {
+            continue;
+        }
+        if (nodes[n]["data"]["count"] < minPapers) {
+            continue;
+        }
         elements.push(nodes[n])
     }
 

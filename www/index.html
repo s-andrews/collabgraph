@@ -35,6 +35,20 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="#" id="layouticon" class="nav-link">
+                  <span data-feather="file"></span>
+                Layout
+                </a>  
+                <p id="layoutp" class="hidden">
+                  <select id="layout" data-style="bg-white shadow-sm " class="selectpicker">
+                    <option selected>cose-bilkent</option>
+                    <option>fcose</option>
+                    <option>circle</option>
+                  </select>
+                </p>
+              </li>
+
+              <li class="nav-item">
                 <a href="#" id="personicon" class="nav-link">
                   <span data-feather="file"></span>
                 Show Person
@@ -96,7 +110,9 @@
 
           <div class="my-4" id="networkGraph" width="900" height="380"></div>
 
+          <div id="interactiontable">
           <h2>Interactions</h2>
+          
           <div class="table-responsive">
             <table class="table table-striped table-sm">
               <thead>
@@ -110,6 +126,7 @@
               <tbody id="papertable">
               </tbody>
             </table>
+          </div>
           </div>
         </main>
       </div>
@@ -136,7 +153,7 @@
     <!-- Layouts -->
     <script src="https://unpkg.com/layout-base/layout-base.js"></script>
     <script src="https://unpkg.com/cose-base/cose-base.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.4.0/cytoscape-cola.js"></script>
+    <script src="https://unpkg.com/cytoscape-fcose/cytoscape-fcose.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape-cose-bilkent@4.1.0/cytoscape-cose-bilkent.js"></script>
     <script src="collaborations.js"></script>
   </body>

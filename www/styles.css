@@ -36,6 +36,15 @@ body {
        height: 50vh;
    }
   
+/* 
+* Interactions
+*/
+
+#interactiontable {
+  height: 30vh;
+  overflow: auto;
+}
+
 
   /*
    * Sidebar

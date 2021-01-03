@@ -49,12 +49,14 @@ $(document).ready(function(){
     $("#years").slider({});
     $('#minpapers').slider({});
     $('#type').selectpicker();
+    $('#layout').selectpicker();
 
     // Actions for the filter links
     $("#papersicon").click(function(){$("#papersp").toggle()})
     $("#yearsicon").click(function(){$("#yearsp").toggle()})
     $("#personicon").click(function(){$("#personp").toggle()})
     $("#typeicon").click(function(){$("#typep").toggle()})
+    $("#layouticon").click(function(){$("#layoutp").toggle()})
 
 
 
@@ -62,6 +64,10 @@ $(document).ready(function(){
     $("#redrawbutton").click(function(){
         $("#papersp").hide();
         $("#yearsp").hide();
+        $("#personp").hide();
+        $("#typep").hide();
+        $("#layoutp").hide();
+
         updateGraph();
     })
 
@@ -90,6 +96,8 @@ function updateGraph () {
     var specificPerson = $('#person').val();
 
     var types = $('#type').val();
+
+    var layout = $('#layout').val();
 
 
     // Make the list of edges, and make nodes for the edges which exist
@@ -207,19 +215,15 @@ function updateGraph () {
         {
             selector: 'edge',
             style: {
-            // 'width': 3,
             'width': "mapData(weight,1,"+maxWeight+",1,10)",
             'line-color': "mapData(weight,1,"+maxWeight+",#CCC,#222)",
-            // 'line-color': '#DDD',
             'curve-style': 'bezier'
             }
         }
         ],
         
         layout: {
-            // name: 'fcose',
-            name: 'cose-bilkent',
-//            name: 'circle',
+            name: layout,
             randomize: true,
             animate: true, 
             idealEdgeLength: 250,

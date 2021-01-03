@@ -11,6 +11,13 @@ body {
     height: 16px;
     vertical-align: text-bottom;
   }
+
+  /*
+   * Filters
+  */
+  .slider-selection {
+    background: #BABABA;
+  }
   
   /*
    * Graph

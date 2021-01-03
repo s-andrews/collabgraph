@@ -206,7 +206,8 @@ function updateGraph () {
         ],
         
         layout: {
-            name: 'fcose',
+            // name: 'fcose',
+            name: 'cose-bilkent',
 //            name: 'circle',
             animate: true, 
             idealEdgeLength: 250,

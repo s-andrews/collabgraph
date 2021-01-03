@@ -5,9 +5,30 @@ $(document).ready(function(){
     publications = {}
     contracts = {}
     links = []
+    people_names = []
 
     $.getJSON("processed_data/people.json", function(data) {
         people = data
+        for (person in people) {
+            people_names.push(person);
+        }
+
+        $('#person').autoComplete({
+            resolver:'custom',
+            events: {
+                search: function(qry, callback) {
+                    suggestions = []
+                    for (i in people_names) {
+                        var thisName = people_names[i]
+                        // console.log("name="+thisName.toLowerCase()+" qry="+qry)
+                        if (thisName.toLowerCase().indexOf(qry.toLowerCase()) > -1) {
+                            suggestions.push(thisName)
+                        }
+                    }
+                    callback(suggestions)
+                }
+            }
+        });
     });
 
     $.getJSON("processed_data/publications.json", function(data) {
@@ -30,6 +51,8 @@ $(document).ready(function(){
     // Actions for the filter links
     $("#papersicon").click(function(){$("#papersp").toggle()})
     $("#yearsicon").click(function(){$("#yearsp").toggle()})
+    $("#personicon").click(function(){$("#personp").toggle()})
+
 
     // Make the redraw button work
     $("#redrawbutton").click(function(){
@@ -60,6 +83,9 @@ function updateGraph () {
 
     var yearRange = $("#years").val().split(",");
 
+    var specificPerson = $('#person').val();
+
+
     // Make the list of edges, and make nodes for the edges which exist
     edges = {}
     nodes = {}
@@ -67,6 +93,12 @@ function updateGraph () {
     for (var i=0;i<links.length; i++) {
         link = links[i]
 
+        // If we're filtering for a person then make sure they're involved
+        if (specificPerson != "") {
+            if (! (link["from"]==specificPerson || link["to"] == specificPerson)) {
+                continue;
+            }
+        }
 
         // We have different eids for publications and contracts
         if (link["eid"].startsWith("Contract_")) {

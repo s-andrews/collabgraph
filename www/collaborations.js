@@ -89,6 +89,8 @@ function updateGraph () {
 
     var specificPerson = $('#person').val();
 
+    var types = $('#type').val();
+
 
     // Make the list of edges, and make nodes for the edges which exist
     edges = {}
@@ -123,6 +125,12 @@ function updateGraph () {
         }
 
         edge_name = link["from"]+"*"+link["to"]
+
+        // If we're filtering by type then we might want to pass at this stage
+        if (!(types.includes(people[link["from"]]["type"]) && types.includes(people[link["to"]]["type"]))) {
+            console.log(people[link["from"]]["type"]+" or "+people[link["to"]]["type"]+" not in "+types);
+            continue;
+        }
 
         person = link["from"]
         if (!(person in nodes)) {
@@ -212,6 +220,7 @@ function updateGraph () {
             // name: 'fcose',
             name: 'cose-bilkent',
 //            name: 'circle',
+            randomize: true,
             animate: true, 
             idealEdgeLength: 250,
             nodeRepulsion: 2048

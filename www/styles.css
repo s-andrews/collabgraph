@@ -18,7 +18,16 @@ body {
   .slider-selection {
     background: #BABABA;
   }
+
+  li.nav-item p {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
   
+  .slider.slider-horizontal{
+    width:100% !important;
+  }
+
   /*
    * Graph
    */

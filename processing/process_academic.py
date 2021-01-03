@@ -67,6 +67,11 @@ def main():
             contractNumber += 1
             fromVal = sections[5].split(" ")[-1]
             toVal = sections[7]
+
+            # There are some blank companies - we don't want those
+            if not toVal:
+                continue
+
             year = sections[3].split("/")[-1]
             contractType = sections[1]
 
@@ -96,6 +101,15 @@ def main():
             contractNumber += 1
             fromVal = sections[5].split(" ")[-1]
             toVal = sections[7]
+
+            # There are some blank companies - we don't want those
+            if not toVal:
+                continue
+
+            if not fromVal:
+                continue
+
+
             year = sections[3].split("/")[-1]
             contractType = sections[1]
 

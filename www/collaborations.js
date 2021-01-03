@@ -46,7 +46,8 @@ $(document).ready(function(){
     waitForDataLoad()
 
     // Sort out the year slider
-    $("#years").slider({})
+    $("#years").slider({});
+    $('#minpapers').slider({});
 
     // Actions for the filter links
     $("#papersicon").click(function(){$("#papersp").toggle()})

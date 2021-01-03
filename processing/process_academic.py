@@ -52,6 +52,26 @@ def main():
                         continue
                     links.append({"eid":eid, "from":p1, "to":p2})
 
+
+
+    with open("raw_data/gl_industry.txt") as file:
+        for line in file:
+            sections = line.split("\t")
+            if sections[0] == "Contract ID": 
+                continue
+
+            fromVal = sections[5].split(" ")[-1]
+            toVal = sections[7]
+            year = sections[3].split("/")[-1]
+
+            if not fromVal in people:
+                people[fromVal] = {"name":fromVal, "type":"GroupLeader"}
+
+            if not toVal in people:
+                people[toVal] = {"name":toVal, "type":"Company"}
+
+            links.append({"eid":"", "from":fromVal, "to":toVal})
+
     with open("www/processed_data/people.json","w") as people_file:
         json.dump(people, people_file)
 

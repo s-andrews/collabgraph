@@ -201,6 +201,8 @@ function updateGraph () {
 
 function setPapers(name1, name2) {
 
+    // This actually sets both papers and contracts
+
     // console.log("Setting papers to "+name1+" and "+name2)
     var table = $("#papertable")
     table.empty()
@@ -227,6 +229,35 @@ function setPapers(name1, name2) {
         if (useThisPaper) {
             var paper = publications[eid];
             table.append("<tr><td>"+paper["collaborators"]+"</td><td>"+paper["title"]+"</td><td>"+paper["year"]+"</td><td><a class=\"btn btn-primary\" href=\""+paper["url"]+"\" role=\"button\" target=\"_abstract\">Abstract</a></td></tr>");  
+            // console.log(link)
+        }
+    }
+
+    for (var eid in contracts) {
+
+        var useThisPaper = false;
+
+        if (contracts[eid]["year"] < yearRange[0] || contracts[eid]["year"] > yearRange[1]) {
+            continue;
+        }
+
+        if (name2) {
+            if (contracts[eid]["from"] == name1 && contracts[eid]["to"] == name2) {
+                useThisPaper = true;
+            }
+            if (contracts[eid]["from"] == name2 && contracts[eid]["to"] == name1) {
+                useThisPaper = true;
+            }
+        }
+        else {
+            if (contracts[eid]["from"] == name1 || contracts[eid]["to"] == name1) {
+                useThisPaper = true;
+            }
+        }
+
+        if (useThisPaper) {
+            var paper = contracts[eid];
+            table.append("<tr><td>"+paper["from"]+", "+ paper["to"]+"</td><td>"+paper["type"]+"</td><td>"+paper["year"]+"</td><td></td></tr>");  
             // console.log(link)
         }
     }

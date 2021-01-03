@@ -108,7 +108,10 @@ def main():
 
             if not fromVal:
                 continue
-
+            
+            # There are too many Walkers in the world, we need to disambiguate them.
+            if fromVal == "Walker":
+                fromVal = fromVal+" "+sections[5][0]
 
             year = sections[3].split("/")[-1]
             contractType = sections[1]

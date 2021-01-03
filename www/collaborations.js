@@ -48,11 +48,14 @@ $(document).ready(function(){
     // Sort out the year slider
     $("#years").slider({});
     $('#minpapers').slider({});
+    $('#type').selectpicker();
 
     // Actions for the filter links
     $("#papersicon").click(function(){$("#papersp").toggle()})
     $("#yearsicon").click(function(){$("#yearsp").toggle()})
     $("#personicon").click(function(){$("#personp").toggle()})
+    $("#typeicon").click(function(){$("#typep").toggle()})
+
 
 
     // Make the redraw button work

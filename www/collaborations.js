@@ -3,6 +3,7 @@ $(document).ready(function(){
 
     people = {}
     publications = {}
+    contracts = {}
     links = []
 
     $.getJSON("processed_data/people.json", function(data) {
@@ -12,7 +13,11 @@ $(document).ready(function(){
     $.getJSON("processed_data/publications.json", function(data) {
         publications = data
     });
-    
+
+    $.getJSON("processed_data/contracts.json", function(data) {
+        contracts = data
+    });
+
     $.getJSON("processed_data/links.json", function(data) {
         links = data
     });
@@ -36,7 +41,7 @@ $(document).ready(function(){
 }); 
 
 function waitForDataLoad(){
-    if($.isEmptyObject(people) || $.isEmptyObject(publications) || $.isEmptyObject(links)){
+    if($.isEmptyObject(people) || $.isEmptyObject(publications) || $.isEmptyObject(contracts) || $.isEmptyObject(links)){
         setTimeout(waitForDataLoad, 250);
     }
     else{
@@ -62,11 +67,23 @@ function updateGraph () {
     for (var i=0;i<links.length; i++) {
         link = links[i]
 
-        if (publications[link["eid"]]["year"] < yearRange[0]) {
-            continue;
+
+        // We have different eids for publications and contracts
+        if (link["eid"].startsWith("Contract_")) {
+            if (contracts[link["eid"]]["year"] < yearRange[0]) {
+                continue;
+            }
+            if (contracts[link["eid"]]["year"] > yearRange[1]) {
+                continue;
+            }   
         }
-        if (publications[link["eid"]]["year"] > yearRange[1]) {
-            continue;
+        else {
+            if (publications[link["eid"]]["year"] < yearRange[0]) {
+                continue;
+            }
+            if (publications[link["eid"]]["year"] > yearRange[1]) {
+             continue;
+         }
         }
 
         edge_name = link["from"]+"*"+link["to"]
@@ -137,9 +154,9 @@ function updateGraph () {
         {
             selector: 'node',
             style: {
-            'background-color': function(ele){if (ele.data('type')=="GroupLeader"){return "#B22"} return('#22B')},
+            'background-color': function(ele){if (ele.data('type')=="GroupLeader"){return "#B22"} else if (ele.data('type')=="Company"){return "#2B2"} return('#22B')},
             'label': 'data(id)',
-            'shape': function(ele){if (ele.data('type')=="GroupLeader"){return "square"} return('triangle')}
+            'shape': function(ele){if (ele.data('type')=="GroupLeader"){return "square"} else if (ele.data('type')=="Company"){return "ellipse"} return('triangle')}
             }
         },
         

@@ -4,6 +4,7 @@ def main():
 
     people = {}
     publications = {}
+    contracts = {}
     links = []
 
     with open("raw_data/publications.txt") as file:
@@ -53,6 +54,7 @@ def main():
                     links.append({"eid":eid, "from":p1, "to":p2})
 
 
+    contractNumber = 0
 
     with open("raw_data/gl_industry.txt") as file:
         for line in file:
@@ -60,9 +62,13 @@ def main():
             if sections[0] == "Contract ID": 
                 continue
 
+            
+            contractID = "Contract_"+str(contractNumber)
+            contractNumber += 1
             fromVal = sections[5].split(" ")[-1]
             toVal = sections[7]
             year = sections[3].split("/")[-1]
+            contractType = sections[1]
 
             if not fromVal in people:
                 people[fromVal] = {"name":fromVal, "type":"GroupLeader"}
@@ -70,7 +76,15 @@ def main():
             if not toVal in people:
                 people[toVal] = {"name":toVal, "type":"Company"}
 
-            links.append({"eid":"", "from":fromVal, "to":toVal})
+            links.append({"eid":contractID, "from":fromVal, "to":toVal})
+
+            contracts[contractID] = {
+                "eid": contractID,
+                "from": fromVal,
+                "to": toVal,
+                "year": year,
+                "type": contractType
+            }
 
     with open("www/processed_data/people.json","w") as people_file:
         json.dump(people, people_file)
@@ -80,7 +94,10 @@ def main():
 
     with open("www/processed_data/links.json","w") as links_file:
         json.dump(links, links_file)
-            
+
+    with open("www/processed_data/contracts.json","w") as contracts_file:
+        json.dump(contracts, contracts_file)
+
             
 def parse_eid(url):
     start = url.index("eid=")+4

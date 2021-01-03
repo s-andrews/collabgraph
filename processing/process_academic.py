@@ -86,6 +86,37 @@ def main():
                 "type": contractType
             }
 
+    with open("raw_data/facility_industry.txt") as file:
+        for line in file:
+            sections = line.split("\t")
+            if sections[0] == "Contract ID": 
+                continue
+
+            contractID = "Contract_"+str(contractNumber)
+            contractNumber += 1
+            fromVal = sections[5].split(" ")[-1]
+            toVal = sections[7]
+            year = sections[3].split("/")[-1]
+            contractType = sections[1]
+
+            if not fromVal in people:
+                people[fromVal] = {"name":fromVal, "type":"Facility"}
+
+            if not toVal in people:
+                people[toVal] = {"name":toVal, "type":"Company"}
+
+            links.append({"eid":contractID, "from":fromVal, "to":toVal})
+
+            contracts[contractID] = {
+                "eid": contractID,
+                "from": fromVal,
+                "to": toVal,
+                "year": year,
+                "type": contractType
+            }
+
+
+
     with open("www/processed_data/people.json","w") as people_file:
         json.dump(people, people_file)
 

@@ -187,6 +187,10 @@ function updateGraph () {
 
     }
 
+    // We'll sort the nodes so that similar types go next to each 
+    // other in naive layouts
+    var sortedNodes = []
+
     for (n in nodes) {
         if (!(n in keptPeople)) {
             continue;
@@ -194,8 +198,21 @@ function updateGraph () {
         if (nodes[n]["data"]["count"] < minPapers) {
             continue;
         }
-        elements.push(nodes[n])
+        // console.log(nodes[n])
+        sortedNodes.push(nodes[n])
     }
+
+    function groupSort (a,b) {
+        return ((a["data"]["type"] < b["data"]["type"]) ? -1 : ((a["data"]["type"] > b["data"]["type"]) ? 1 : 0))
+    }
+
+    sortedNodes.sort(groupSort)
+
+    for (n in sortedNodes) {
+        console.log(sortedNodes[n]["data"]["type"])
+        elements.push(sortedNodes[n])
+    }
+
 
     for (e in edges) {
         if (edges[e]["data"]["weight"] < minPapers) {

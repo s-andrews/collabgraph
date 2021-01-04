@@ -73,7 +73,6 @@ $(document).ready(function(){
 
     // Make the graph export work
     $('#export').click(function() {
-        console.log(cy);
         var imgBlob = new Blob([cy.svg()], {type: 'image/svg+xml'});
 
         saveAs( imgBlob, 'collaborations.svg');
@@ -144,7 +143,6 @@ function updateGraph () {
 
         // If we're filtering by type then we might want to pass at this stage
         if (!(types.includes(people[link["from"]]["type"]) && types.includes(people[link["to"]]["type"]))) {
-            console.log(people[link["from"]]["type"]+" or "+people[link["to"]]["type"]+" not in "+types);
             continue;
         }
 
@@ -209,7 +207,6 @@ function updateGraph () {
     sortedNodes.sort(groupSort)
 
     for (n in sortedNodes) {
-        console.log(sortedNodes[n]["data"]["type"])
         elements.push(sortedNodes[n])
     }
 
@@ -252,7 +249,15 @@ function updateGraph () {
             randomize: true,
             animate: true, 
             idealEdgeLength: 250,
-            nodeRepulsion: 2048
+            nodeRepulsion: 2048,
+            concentric: function(n){
+                var value = 0
+                if(n.data("type")=="Facility"){value = 300}
+                if(n.data("type")=="GroupLeader"){value = 150}
+                if(n.data("type")=="Company"){value = 1}
+                return(value)
+            },
+            levelWidth: function(n) {return 20}
         }
         
         });

@@ -71,6 +71,14 @@ $(document).ready(function(){
         updateGraph();
     })
 
+    // Make the graph export work
+    $('#export').click(function() {
+        console.log(cy);
+        var imgBlob = new Blob([cy.svg()], {type: 'image/svg+xml'});
+
+        saveAs( imgBlob, 'collaborations.svg');
+    })
+
 }); 
 
 function waitForDataLoad(){
@@ -196,7 +204,7 @@ function updateGraph () {
         elements.push(edges[e])
     }
 
-    var cy = cytoscape({
+    cy = cytoscape({
 
         container: document.getElementById('networkGraph'), // container to render in
         

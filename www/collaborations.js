@@ -72,11 +72,24 @@ $(document).ready(function(){
     })
 
     // Make the graph export work
-    $('#export').click(function() {
+    // SVG
+    $('#exportsvg').click(function() {
         var imgBlob = new Blob([cy.svg()], {type: 'image/svg+xml'});
 
         saveAs( imgBlob, 'collaborations.svg');
     })
+
+    //PNG
+    $('#exportpng').click(function() {
+        var b64key = 'base64,';
+        var png = cy.png({scale:10});
+        var b64 = png.substring( png.indexOf(b64key) + b64key.length );
+        var imgBlob = base64ToBlob( b64, 'image/png' );
+        
+        saveAs( imgBlob, 'collaborations.png' );    })
+
+
+
 
 }); 
 

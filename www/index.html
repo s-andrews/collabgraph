@@ -105,8 +105,14 @@
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <!-- <h1 class="h2">Interactions</h1> -->
             <div class="btn-toolbar mb-2 mb-md-0">
-              <div class="btn-group mr-2">
-                <button id="export" class="btn btn-sm btn-outline-secondary">Export</button>
+              <div class="btn-group mr-2 dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Export Image
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a id="exportsvg" class="dropdown-item" href="#">SVG</a>
+                  <a id="exportpng" class="dropdown-item" href="#">PNG</a>
+                </div>
               </div>
             </div>
           </div>
@@ -163,6 +169,9 @@
     <script src="js/cytoscape-cose-bilkent.js"></script>
     <script src="js/avsdf-base.js"></script>
     <script src="js/cytoscape-avsdf.js"></script>
+
+    <!-- File Saving -->
+    <script src="js/base64toblob.js"></script>
 
     <!-- Custom JS -->
     <script src="collaborations.js"></script>
